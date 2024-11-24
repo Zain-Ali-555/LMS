@@ -40,40 +40,48 @@ import javafx.animation.KeyValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 
+import javafx.scene.paint.Color;
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+
+import javafx.animation.AnimationTimer;
+
 
 public class LibraryManagementSystem extends Application {
 
+
+    @Override
     public void start(Stage primaryStage) {
         // Main Layout
         StackPane mainLayout = new StackPane();
-        mainLayout.setStyle(
-                "-fx-background-color: linear-gradient(to bottom, #0A192F, #001F3F, #001B48); " + // Richer gradient
-                        "-fx-background-size: cover;" +
-                        "-fx-background-blend-mode: overlay;" +
-                        "-fx-effect: innershadow(gaussian, rgba(0,0,0,0.5), 30, 0.3, 0, 0);"); // Add subtle shadow
+
+        // Animated Background Canvas
+        Canvas animatedCanvas = new Canvas(900, 600);
+        GraphicsContext gc = animatedCanvas.getGraphicsContext2D();
+        mainLayout.getChildren().add(animatedCanvas);
+
+        // Create the Back-and-Forth Gradient Animation
+        startReversingGradientAnimation(gc);
 
         // Welcome Section
         VBox welcomeSection = new VBox(20);
         welcomeSection.setPadding(new Insets(30));
         welcomeSection.setAlignment(Pos.CENTER);
         welcomeSection.setStyle(
-                "-fx-background-color: rgba(255, 255, 255, 0.1); " +
+                "-fx-background-color: rgba(0, 0, 0, 0.6); " +
                         "-fx-border-radius: 15; -fx-background-radius: 15; " +
-                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 25, 0, 0, 5);"); // Stronger shadow for a "heavy" feel
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 25, 0, 0, 5);");
 
         // Welcome Label
         Label welcomeLabel = new Label("📚 Welcome to Good Books Library!");
-        welcomeLabel.setStyle(
-                "-fx-font-size: 34px; -fx-font-weight: bold; " +
-                        "-fx-text-fill: #F5F5F5; -fx-padding: 0 0 10 0; -fx-font-family: 'Segoe UI', sans-serif; " +
-                        "-fx-effect: dropshadow(gaussian, rgba(255,255,255,0.8), 3, 0, 0, 0);"); // Add glow effect
+        welcomeLabel.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #FFD700;");
 
         // Quote Label
         Label quoteLabel = new Label("“A room without books is like a body without a soul.”");
-        quoteLabel.setStyle(
-                "-fx-font-size: 22px; -fx-font-style: italic; " +
-                        "-fx-text-fill: #FFD700; -fx-padding: 0 0 20 0; " +
-                        "-fx-font-family: 'Georgia', serif;");
+        quoteLabel.setStyle("-fx-font-size: 20px; -fx-font-style: italic; -fx-text-fill: #F8F8FF;");
 
         // Buttons for Portal Navigation
         Button librarianButton = new Button("👨‍💼 Librarian Portal");
@@ -81,6 +89,7 @@ public class LibraryManagementSystem extends Application {
 
         styleButton(librarianButton, "#4CAF50", "#388E3C", "#FFFFFF");
         styleButton(readerButton, "#2196F3", "#1565C0", "#FFFFFF");
+
 
         // Button Actions
         librarianButton.setOnAction(e -> openLibrarianChoicePage(primaryStage));
@@ -109,26 +118,59 @@ public class LibraryManagementSystem extends Application {
         primaryStage.show();
     }
 
+    private void startReversingGradientAnimation(GraphicsContext gc) {
+        AnimationTimer timer = new AnimationTimer() {
+            double offset = 0; // Offset for the gradient animation
+            double direction = 0.005; // Controls the direction of animation (positive or negative)
 
-    // Button Styling Utility
-    private void styleButton(Button button, String baseColor, String hoverColor, String textColor) {
-        button.setStyle(String.format(
-                "-fx-padding: 15 40; -fx-background-color: %s; -fx-text-fill: %s; -fx-font-size: 18px; " +
-                        "-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: bold; -fx-border-radius: 15; " +
-                        "-fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 2, 2);",
-                baseColor, textColor));
+            @Override
+            public void handle(long now) {
+                offset += direction;
 
-        button.setOnMouseEntered(e -> button.setStyle(String.format(
-                "-fx-padding: 15 40; -fx-background-color: %s; -fx-text-fill: %s; -fx-font-size: 18px; " +
-                        "-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: bold; -fx-border-radius: 15; " +
-                        "-fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 3, 3);",
-                hoverColor, textColor)));
+                // Reverse the direction if the offset exceeds bounds
+                if (offset >= 1 || offset <= 0) {
+                    direction = -direction; // Reverse the animation
+                }
 
-        button.setOnMouseExited(e -> button.setStyle(String.format(
-                "-fx-padding: 15 40; -fx-background-color: %s; -fx-text-fill: %s; -fx-font-size: 18px; " +
-                        "-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: bold; -fx-border-radius: 15; " +
-                        "-fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0, 2, 2);",
-                baseColor, textColor)));
+                // Create a dynamic gradient
+                gc.setFill(new LinearGradient(
+                        0, 0, 1, 1, true,
+                        javafx.scene.paint.CycleMethod.NO_CYCLE,
+                        new Stop(0, interpolateColor(Color.web("#0A192F"), Color.web("#1E90FF"), offset)),
+                        new Stop(0.5, interpolateColor(Color.web("#1E90FF"), Color.web("#001B48"), offset)),
+                        new Stop(1, interpolateColor(Color.web("#001B48"), Color.web("#0A192F"), offset))
+                ));
+
+                // Fill the canvas with the gradient
+                gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+            }
+        };
+        timer.start();
+    }
+
+    private void styleButton(Button button, String bgColor, String hoverColor, String textColor) {
+        button.setStyle("-fx-background-color: " + bgColor + "; " +
+                "-fx-text-fill: " + textColor + "; " +
+                "-fx-font-size: 18px; -fx-font-weight: bold; -fx-padding: 10 20; -fx-border-radius: 10; -fx-background-radius: 10;");
+
+        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: " + hoverColor + "; " +
+                "-fx-text-fill: " + textColor + "; -fx-font-size: 18px; -fx-font-weight: bold; " +
+                "-fx-padding: 10 20; -fx-border-radius: 10; -fx-background-radius: 10;"));
+
+        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: " + bgColor + "; " +
+                "-fx-text-fill: " + textColor + "; -fx-font-size: 18px; -fx-font-weight: bold; " +
+                "-fx-padding: 10 20; -fx-border-radius: 10; -fx-background-radius: 10;"));
+    }
+
+    private Color interpolateColor(Color startColor, Color endColor, double fraction) {
+        double red = clamp(startColor.getRed() + (endColor.getRed() - startColor.getRed()) * fraction);
+        double green = clamp(startColor.getGreen() + (endColor.getGreen() - startColor.getGreen()) * fraction);
+        double blue = clamp(startColor.getBlue() + (endColor.getBlue() - startColor.getBlue()) * fraction);
+        return new Color(red, green, blue, 1.0);
+    }
+
+    private double clamp(double value) {
+        return Math.max(0.0, Math.min(1.0, value));
     }
 
     // ************** Librarian **************
