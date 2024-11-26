@@ -7,19 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import javafx.geometry.HPos;
-
 import javafx.stage.Modality;
-
-
 import org.mindrot.jbcrypt.BCrypt;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,24 +24,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import javafx.util.Duration;
 import javafx.animation.Animation;
-
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-
 import javafx.scene.paint.Color;
-
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
-
 import javafx.animation.AnimationTimer;
 
 
@@ -71,8 +60,7 @@ public class LibraryManagementSystem extends Application {
         welcomeSection.setPadding(new Insets(30));
         welcomeSection.setAlignment(Pos.CENTER);
         welcomeSection.setStyle(
-                "-fx-background-color: rgba(0, 0, 0, 0.6); " +
-                        "-fx-border-radius: 15; -fx-background-radius: 15; " +
+                "-fx-background-color: rgba(0, 0, 0, .5); " +
                         "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 25, 0, 0, 5);");
 
         // Welcome Label
@@ -184,7 +172,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label choiceLabel = new Label("Librarian Portal");
+        Label choiceLabel = new Label("👨‍💼 Librarian Portal");
         choiceLabel.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2C3E50; -fx-padding: 10;");
 
         Label subtitleLabel = new Label("Access your librarian tools below:");
@@ -226,6 +214,7 @@ public class LibraryManagementSystem extends Application {
         backButton.setOnAction(e -> start(stage));
     }
 
+    // SignUp Librarian
     private void openLibrarianRegisterPage(Stage stage) {
         // Main Layout
         VBox mainLayout = new VBox(30);
@@ -235,7 +224,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("Librarian Signup");
+        Label titleLabel = new Label("👨‍💼 Librarian Signup");
         titleLabel.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;");
         Label subtitleLabel = new Label("Create your librarian account");
         subtitleLabel.setStyle("-fx-font-size: 18px; -fx-font-style: italic; -fx-text-fill: #424242;");
@@ -303,7 +292,7 @@ public class LibraryManagementSystem extends Application {
         mainLayout.getChildren().addAll(titleSection, signupForm, buttonSection, footerLabel);
 
         // Scene Setup
-        Scene signupScene = new Scene(mainLayout, 900, 700); // Slightly taller for larger fields
+        Scene signupScene = new Scene(mainLayout, 900, 600); // Slightly taller for larger fields
         stage.setScene(signupScene);
 
         // Button Actions
@@ -351,6 +340,7 @@ public class LibraryManagementSystem extends Application {
         return false;
     }
 
+    // Login Librarian
     private void openLibrarianLoginPage(Stage stage) {
         // Main Layout
         VBox mainLayout = new VBox(30);
@@ -360,7 +350,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("Librarian Login");
+        Label titleLabel = new Label("👨‍💼 Librarian Login");
         titleLabel.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;");
         Label subtitleLabel = new Label("Access your library tools");
         subtitleLabel.setStyle("-fx-font-size: 18px; -fx-font-style: italic; -fx-text-fill: #424242;");
@@ -418,7 +408,7 @@ public class LibraryManagementSystem extends Application {
         mainLayout.getChildren().addAll(titleSection, loginForm, buttonSection, footerLabel);
 
         // Scene Setup
-        Scene loginScene = new Scene(mainLayout, 900, 700); // Increased height for larger elements
+        Scene loginScene = new Scene(mainLayout, 900, 600); // Increased height for larger elements
         stage.setScene(loginScene);
 
         // Button Actions
@@ -471,7 +461,8 @@ public class LibraryManagementSystem extends Application {
         return false; // Login failed
     }
 
-    // New
+    // Librarian Section
+
     private void openLibrarianSection(Stage stage) {
         VBox librarianSection = new VBox(20);
         librarianSection.setPadding(new Insets(30));
@@ -484,7 +475,7 @@ public class LibraryManagementSystem extends Application {
 
         Button addBookButton = createStyledButtonWithIcon("Add Book", "📚");
         Button viewBooksButton = createStyledButtonWithIcon("View Books", "📖");
-        Button updateBookButton = createStyledButtonWithIcon("Update Book", "✏️");
+        Button updateBookButton = createStyledButtonWithIcon("Update Book", "✏");
         Button removeBookButton = createStyledButtonWithIcon("Remove Book", "❌");
         Button ordersButton = createStyledButtonWithIcon("Orders", "🛒");
         Button issuedBooksButton = createStyledButtonWithIcon("Issued Books", "📤");
@@ -607,8 +598,7 @@ public class LibraryManagementSystem extends Application {
         return button;
     }
 
-    // New
-
+    // Add Books
     private void openAddBookPage(Stage stage) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -805,7 +795,6 @@ public class LibraryManagementSystem extends Application {
     }
 
     // Fetch books from the database and add them to the VBox
-
     public static class Book {
         private String isbn;
         private String bookName;
@@ -867,8 +856,7 @@ public class LibraryManagementSystem extends Application {
         }
     }
 
-    // Librarian Update Page
-
+    // Update Books
     private void openUpdateBookPage(Stage stage) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -878,7 +866,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("📖 Update Book Details");
+        Label titleLabel = new Label("✏ Update Book Details");
         titleLabel.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;");
         Label subtitleLabel = new Label("Search for a book and update its details below.");
         subtitleLabel.setStyle("-fx-font-size: 14px; -fx-font-style: italic; -fx-text-fill: #5D6D7E;");
@@ -1073,7 +1061,6 @@ public class LibraryManagementSystem extends Application {
     }
 
     // Delete Book
-
     private void openDeleteBookPage(Stage stage) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -1083,7 +1070,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("🗑️ Delete Book");
+        Label titleLabel = new Label("🗑 Delete Book");
         titleLabel.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #A93226;");
         Label subtitleLabel = new Label("Search for a book and delete it from the library.");
         subtitleLabel.setStyle("-fx-font-size: 14px; -fx-font-style: italic; -fx-text-fill: #6C3483;");
@@ -1212,8 +1199,7 @@ public class LibraryManagementSystem extends Application {
         return null;
     }
 
-    // ******** Orders Page ********
-
+    // Orders
     private void openOrdersPage(Stage stage) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -1288,7 +1274,12 @@ public class LibraryManagementSystem extends Application {
 
         // Back Button
         Button backButton = new Button("Back");
-        Order_styleButton(backButton, "#3498DB", "#2980B9");
+        backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; " +
+                "-fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;");
+        backButton.setOnMouseEntered(e -> backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #2980B9; -fx-text-fill: white; " +
+                "-fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;"));
+        backButton.setOnMouseExited(e -> backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #3498DB; -fx-text-fill: white; " +
+                "-fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;"));
         backButton.setOnAction(e -> openLibrarianSection(stage));
 
         // Combine All Sections
@@ -1395,7 +1386,7 @@ public class LibraryManagementSystem extends Application {
     }
 
 
-    // ******** Issued Books Page ********
+    // Issued Books
 
     private void openIssuedBooksPage(Stage stage) {
         // Main Layout
@@ -1406,7 +1397,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("📚 Issued Books");
+        Label titleLabel = new Label("📤 Issued Books");
         titleLabel.setStyle("-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;");
         Label subtitleLabel = new Label("View the list of books currently issued.");
         subtitleLabel.setStyle("-fx-font-size: 14px; -fx-font-style: italic; -fx-text-fill: #5D6D7E;");
@@ -1445,8 +1436,10 @@ public class LibraryManagementSystem extends Application {
         Button backButton = new Button("Back");
         backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; " +
                 "-fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;");
-        backButton.setOnMouseEntered(e -> backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #2980B9; -fx-text-fill: white;"));
-        backButton.setOnMouseExited(e -> backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #3498DB; -fx-text-fill: white;"));
+        backButton.setOnMouseEntered(e -> backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #2980B9; -fx-text-fill: white; " +
+                "-fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;"));
+        backButton.setOnMouseExited(e -> backButton.setStyle("-fx-padding: 10 30; -fx-background-color: #3498DB; -fx-text-fill: white; " +
+                "-fx-font-size: 14px; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;"));
         backButton.setOnAction(e -> openLibrarianSection(stage));
 
         // Combine All Sections
@@ -1486,7 +1479,7 @@ public class LibraryManagementSystem extends Application {
         return issuedBooks;
     }
 
-    // ******** Order Class for TableView ********
+    // Order Class for TableView
 
     public static class Order {
         private int orderId;
@@ -1537,7 +1530,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 20; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("📚 Reader Portal");
+        Label titleLabel = new Label("📖 Reader Portal");
         titleLabel.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;");
 
         Label subtitleLabel = new Label("Manage your library account with ease.");
@@ -1603,7 +1596,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("Reader Signup");
+        Label titleLabel = new Label("📖 Reader Signup");
         titleLabel.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;");
         Label subtitleLabel = new Label("Create your library account");
         subtitleLabel.setStyle("-fx-font-size: 18px; -fx-font-style: italic; -fx-text-fill: #424242;");
@@ -1681,7 +1674,7 @@ public class LibraryManagementSystem extends Application {
         mainLayout.getChildren().addAll(titleSection, signupForm, buttonSection, footerLabel);
 
         // Scene Setup
-        Scene signupScene = new Scene(mainLayout, 900, 700); // Slightly taller for larger fields
+        Scene signupScene = new Scene(mainLayout, 900, 600); // Slightly taller for larger fields
         stage.setScene(signupScene);
 
         // Button Actions
@@ -1758,7 +1751,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("Reader Login");
+        Label titleLabel = new Label("📖 Reader Login");
         titleLabel.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;");
         Label subtitleLabel = new Label("Access your library account");
         subtitleLabel.setStyle("-fx-font-size: 18px; -fx-font-style: italic; -fx-text-fill: #424242;");
@@ -1816,7 +1809,7 @@ public class LibraryManagementSystem extends Application {
         mainLayout.getChildren().addAll(titleSection, loginForm, buttonSection, footerLabel);
 
         // Scene Setup
-        Scene loginScene = new Scene(mainLayout, 900, 700); // Increased height for larger elements
+        Scene loginScene = new Scene(mainLayout, 900, 600); // Increased height for larger elements
         stage.setScene(loginScene);
 
         // Button Actions
@@ -1875,15 +1868,7 @@ public class LibraryManagementSystem extends Application {
         return null;  // Login failed
     }
 
-    // Show Alert Method
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();  // This ensures the alert doesn't terminate the app
-    }
-
+    // Reader Section
     private void openReaderSection(Stage stage, String readerName, String department) {
         VBox readerSection = new VBox(20);
         readerSection.setPadding(new Insets(30));
@@ -1994,6 +1979,7 @@ public class LibraryManagementSystem extends Application {
     }
 
     // Place Order Popup
+
     private void openPlaceOrderPopup(String readerName, String department, Button pendingOrdersButton) {
         Stage popupStage = new Stage();
         popupStage.setTitle("📖 Place Order");
@@ -2124,7 +2110,6 @@ public class LibraryManagementSystem extends Application {
         });
     }
 
-    // Fetch available books from the database
     private ObservableList<Book> fetchAvailableBooks() {
         ObservableList<Book> books = FXCollections.observableArrayList();
         Connection connection = DatabaseConnection.getConnection();
@@ -2198,6 +2183,7 @@ public class LibraryManagementSystem extends Application {
         pendingOrdersButton.setDisable(!hasPendingOrders);
     }
 
+    // View Books
     private void openReaderViewBooksPage(Stage stage, String readerName, String department) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -2308,9 +2294,7 @@ public class LibraryManagementSystem extends Application {
         return books;
     }
 
-
     // Pending Orders
-
     private void openPendingOrdersPage(Stage stage, String readerName) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -2320,7 +2304,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("📋 Pending Orders");
+        Label titleLabel = new Label("⏳ Pending Orders");
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;");
         Label subtitleLabel = new Label("View all your pending book orders.");
         subtitleLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #34495E;");
@@ -2396,7 +2380,6 @@ public class LibraryManagementSystem extends Application {
     }
 
     // Borrowed Books
-
     private void openBorrowedBooksPage(Stage stage, String readerName) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -2406,7 +2389,7 @@ public class LibraryManagementSystem extends Application {
                 "-fx-border-radius: 15; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
 
         // Title Section
-        Label titleLabel = new Label("📚 Borrowed Books");
+        Label titleLabel = new Label("📤 Borrowed Books");
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;");
         Label subtitleLabel = new Label("View the list of books you have borrowed.");
         subtitleLabel.setStyle("-fx-font-size: 16px; -fx-font-style: italic; -fx-text-fill: #34495E;");
@@ -2483,7 +2466,6 @@ public class LibraryManagementSystem extends Application {
     }
 
     // Return Books
-
     private void openReturnBookPage(Stage stage, String readerName) {
         // Main Layout
         VBox mainLayout = new VBox(20);
@@ -2672,6 +2654,17 @@ public class LibraryManagementSystem extends Application {
                 e.printStackTrace();
             }
         }
+    }
+
+
+
+    // Show Alert Method
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();  // This ensures the alert doesn't terminate the app
     }
 
 }
