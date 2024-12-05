@@ -2087,20 +2087,28 @@ public class LibraryManagementSystem extends Application {
         submitButton.setOnAction(e -> {
             Book selectedBook = availableBooksTable.getSelectionModel().getSelectedItem();
             LocalDate returnDate = returnDatePicker.getValue();
+            LocalDate currentDate = LocalDate.now(); // Get the current date
 
             if (selectedBook == null) {
                 showAlert(Alert.AlertType.ERROR, "Validation Error", "Please select a book to place an order.");
                 return;
             }
+
             if (returnDate == null) {
                 showAlert(Alert.AlertType.ERROR, "Validation Error", "Please select a return date.");
+                return;
+            }
+
+            // Check if the return date is earlier than the current date
+            if (returnDate.isBefore(currentDate)) {
+                showAlert(Alert.AlertType.ERROR, "Validation Error", "Return date cannot be earlier than the current date.");
                 return;
             }
 
             // Process the order
             if (processOrder(readerName, department, selectedBook, returnDate)) {
                 popupStage.close();
-                showAlert(Alert.AlertType.INFORMATION, "Order Placed", "Your order has been successfully placed for pending.");
+                showAlert(Alert.AlertType.INFORMATION, "Order Placed", "Your order has been successfully placed.");
 
                 // Enable Pending Orders Button
                 updatePendingOrdersButtonState(pendingOrdersButton, readerName);
@@ -2108,6 +2116,7 @@ public class LibraryManagementSystem extends Application {
                 showAlert(Alert.AlertType.ERROR, "Order Failed", "Failed to place the order.");
             }
         });
+
     }
 
     private ObservableList<Book> fetchAvailableBooks() {
